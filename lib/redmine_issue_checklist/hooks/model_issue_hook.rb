@@ -22,13 +22,13 @@ module RedmineIssueChecklist
     class ModelIssueHook < Redmine::Hook::ViewListener
 
       def controller_issues_edit_before_save(context={})
-        if User.current.allowed_to?(:edit_checklists, context[:issue].project)
+        if User.current.allowed_to?(:edit_checklists, context[:issue].project) && context[:params][:manage_checklist]
           save_checklist_to_issue(context, RedmineIssueChecklist.settings[:save_log])
         end
       end
 
       def controller_issues_new_after_save(context={})
-        if User.current.allowed_to?(:edit_checklists, context[:issue].project)
+        if User.current.allowed_to?(:edit_checklists, context[:issue].project) && context[:params][:manage_checklist]
           save_checklist_to_issue(context, false)
           context[:issue].save
         end
