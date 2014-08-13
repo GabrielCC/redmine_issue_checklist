@@ -28,6 +28,7 @@ module RedmineIssueChecklist
         end
 
         def update_checklist_items(checklist_items, create_journal = false)
+          Rails.logger.fatal "update checklist items"
           checklist_items ||= []
 
           old_checklist = checklist.collect(&:info).join(', ')
